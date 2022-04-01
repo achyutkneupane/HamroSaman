@@ -7,8 +7,6 @@ use App\Http\Requests\AuthenticateRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\SignUpRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
