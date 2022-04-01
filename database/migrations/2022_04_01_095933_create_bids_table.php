@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('auction_id');
             $table->unsignedBigInteger('user_id');
             $table->decimal('amount', 8, 2);
+            $table->boolean('is_winner')->default(false);
             $table->timestamps();
 
             $table->foreign('auction_id')->references('id')->on('auctions');

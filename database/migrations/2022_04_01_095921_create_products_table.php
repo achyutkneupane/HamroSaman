@@ -19,8 +19,10 @@ return new class extends Migration
             $table->string('slug');
             $table->text('description');
             $table->decimal('min_price', 8, 2);
+            $table->unsignedBigInteger('user_id');
             $table->text('image')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
