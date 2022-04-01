@@ -16,8 +16,11 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
+        $title = $this->faker->sentence(2);
         return [
-            //
+            'name' => $title,
+            'slug' => \Illuminate\Support\Str::slug($title),
+            'description' => $this->faker->sentence,
         ];
     }
 }

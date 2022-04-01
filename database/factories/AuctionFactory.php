@@ -17,7 +17,10 @@ class AuctionFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'product_id' => $this->faker->numberBetween(1, 20),
+            'start_at' => $this->faker->dateTimeBetween('-1 months', '-1 weeks'),
+            'end_at' => $this->faker->dateTimeBetween('-3 days', '+1 weeks'),
+
         ];
     }
 }
