@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +20,16 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', function() {
-    return view('welcome');
+Route::get('/', [HomeController::class, 'index'])->name('welcome');
+// all products
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+// show product
+Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
+
+// admin links
+Route::group(['prefix' => 'admin','as'=>'admin.'], function() {
+    Route::get('/', [HomeController::class, 'dashboard'])->name('home');
+
+    // Products
+    Route::get('/products', [ProductController::class, 'adminIndex'])->name('products.index');
 });
-Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');

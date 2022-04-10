@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Guest routes
-Route::post('/login', [AuthController::class, 'authenticate'])->name('auth.login');
-Route::post('/register', [AuthController::class, 'signup'])->name('auth.register');
-Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('auth.reset');
+// Route::post('/login', [AuthController::class, 'authenticate'])->name('auth.login');
+// Route::post('/register', [AuthController::class, 'signup'])->name('auth.register');
+// Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('auth.reset');
 
 
 Route::middleware('auth:sanctum')->group(function () {
