@@ -29,6 +29,14 @@
                         </li>
                     @endif
                 @else
+
+                    @if(auth()->user()->role == 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary btn-lg text-white" href="{{ route('admin.home') }}">
+                            {{ __('Admin Panel') }}
+                        </a>
+                    </li>
+                    @endif
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle btn btn-secondary btn-lg text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->full_name }}
