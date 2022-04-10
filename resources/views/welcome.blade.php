@@ -39,7 +39,9 @@
                                         width="300">
                                     <div class='mt-3'>
                                         <h5 class='text-danger'>Rs. {{ $product->min_price }}</h5>
-                                        <h4 class="text-primary">{{ $product->name }}</h4>
+                                        <a href="{{ route('products.show',$product->slug) }}">
+                                            <h4 class="text-primary">{{ $product->name }}</h4>
+                                        </a>
                                         <h6 class="mt-0 d-flex justify-content-between">
                                             <span class='text-black-50'>
                                                 Uploaded by:

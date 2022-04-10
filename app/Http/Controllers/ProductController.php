@@ -11,4 +11,8 @@ class ProductController extends Controller
         $products = Product::with('user','category')->paginate(21);
         return view('products.index', compact('products'));
     }
+    public function show($slug) {
+        $product = Product::with('user','category')->where('slug', $slug)->firstOrFail();
+        return view('products.show', compact('product'));
+    }
 }

@@ -24,7 +24,7 @@ Route::get('/', [HomeController::class, 'index'])->name('welcome');
 // all products
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 // show product
-Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 
 // admin links
 Route::group(['prefix' => 'admin','as'=>'admin.'], function() {
