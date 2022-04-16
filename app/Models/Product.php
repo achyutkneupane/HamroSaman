@@ -19,4 +19,29 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function scopeCategorySearch($query, $category)
+    {
+        if ($category) {
+            return $query->where('category_id', $category);
+        }
+    }
+    public function scopeSearchTerm($query, $searchTerm)
+    {
+        if ($searchTerm) {
+            return $query->where('name', 'LIKE', '%' . $searchTerm . '%');
+        }
+    }
+    public function scopeMinPrice($query, $minPrice)
+    {
+        if ($minPrice) {
+            return $query->where('min_price', '>=', $minPrice);
+        }
+    }
+    public function scopeMaxPrice($query, $maxPrice)
+    {
+        if ($maxPrice) {
+            return $query->where('min_price', '<=', $maxPrice);
+        }
+    }
 }
