@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('Ghost0vperditi0n'),
         ]);
         Category::factory(5)->create()->each(function ($category) {
-            $category->products()->saveMany(Product::factory(5)->make());
+            $category->products()->saveMany(Product::factory(10)->make());
         });
     }
 }

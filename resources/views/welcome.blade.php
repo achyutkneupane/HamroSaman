@@ -34,15 +34,19 @@
                                 <h6 class="mt-0 text-danger text-center">
                                     Category: <span class="fw-bolder">{{ $product->category->name }}</span>
                                 </h6>
-                                <div class="about-product text-center mt-2"><img
-                                        src="{{ $product->image ? '' : 'https://www.aaronfaber.com/wp-content/uploads/2017/03/product-placeholder-wp.jpg' }}"
+                                <div class="about-product text-center mt-2">
+                                    <img
+                                        src="{{ $product->image ? asset(Storage::url($product->image)) : 'https://www.aaronfaber.com/wp-content/uploads/2017/03/product-placeholder-wp.jpg' }}"
                                         width="300">
-                                    <div class='mt-3'>
+                                    <div class='mt-3 d-flex flex-column gap-1'>
                                         <h5 class='text-danger'>Rs. {{ $product->min_price }}</h5>
                                         <a href="{{ route('products.show',$product->slug) }}">
                                             <h4 class="text-primary">{{ $product->name }}</h4>
                                         </a>
-                                        <h6 class="mt-0 d-flex justify-content-between">
+                                        @if($product->user == auth()->user())
+                                        <span class='text-danger'>[Your Product]</span>
+                                        @endif
+                                        <h6 class="mt-2 d-flex justify-content-between">
                                             <span class='text-black-50'>
                                                 Uploaded by:
                                             </span>
@@ -50,18 +54,6 @@
                                                 {{ $product->user->full_name }}
                                             </span>
                                         </h6>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="ratings">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                        <div class="addFavourite">
-                                            <i class="fa fa-heart"></i>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

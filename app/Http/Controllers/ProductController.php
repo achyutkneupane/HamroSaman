@@ -12,7 +12,7 @@ class ProductController extends Controller
     public function index()
     {
         $categories = Category::all();
-        $products = Product::with('user', 'category')->paginate(21);
+        $products = Product::with('user', 'category')->orderByDesc('created_at')->paginate(21);
         return view('products.index', compact('products', 'categories'));
     }
     public function show($slug)

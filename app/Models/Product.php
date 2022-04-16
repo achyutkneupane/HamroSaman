@@ -19,6 +19,10 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    public function auction()
+    {
+        return $this->hasOne(Auction::class);
+    }
 
     public function scopeCategorySearch($query, $category)
     {

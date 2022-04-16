@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('pageTitle', 'Welcome')
+@section('pageTitle', 'Products')
 
 @section('content')
     <div class="container my-5">
@@ -65,12 +65,15 @@
                                             Category: <span class="fw-bolder">{{ $product->category->name }}</span>
                                         </h6>
                                         <div class="about-product text-center mt-2">
-                                            <img src="{{ $product->image ? '' : 'https://www.aaronfaber.com/wp-content/uploads/2017/03/product-placeholder-wp.jpg' }}" class="w-100">
+                                            <img src="{{ $product->image ? asset(Storage::url($product->image)) : 'https://www.aaronfaber.com/wp-content/uploads/2017/03/product-placeholder-wp.jpg' }}" class="w-100">
                                             <div class='mt-3'>
                                                 <h5 class='text-danger'>Rs. {{ $product->min_price }}</h5>
                                                 <a href="{{ route('products.show',$product->slug) }}">
                                                     <h4 class="text-primary">{{ $product->name }}</h4>
                                                 </a>
+                                                @if($product->user == auth()->user())
+                                                <span class='text-danger'>[Your Product]</span>
+                                                @endif
                                                 <h6 class="mt-0 d-flex justify-content-between">
                                                     <span class='text-black-50'>
                                                         Uploaded by:
@@ -79,18 +82,6 @@
                                                         {{ $product->user->full_name }}
                                                     </span>
                                                 </h6>
-                                            </div>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="ratings">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="addFavourite">
-                                                    <i class="fa fa-heart"></i>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>

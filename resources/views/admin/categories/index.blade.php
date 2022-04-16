@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('pageTitle', __('Products'))
+@section('pageTitle', __('Categories'))
 
 @section('content')
     <div class="card">
@@ -11,31 +11,27 @@
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">Title</th>
-                      <th scope="col">Price</th>
-                      <th scope="col">Posted By</th>
-                      <th scope="col">Category</th>
+                      <th scope="col">Products</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @forelse ($products as $product)
+                    @forelse ($categories as $category)
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
-                        <td>{{ $product->name }}</td>
-                        <td>Rs. {{ $product->min_price }}</td>
-                        <td>{{ $product->user->full_name }}</td>
-                        <td>{{ $product->category->name }}</td>
+                        <td>{{ $category->name }}</td>
+                        <td>{{ $category->products()->count() }}</td>
                       </tr>
                     @empty
                         <tr>
-                          <td class="alert alert-danger" colspan="5">
-                            No Products
+                          <td class="alert alert-danger" colspan="3">
+                            No Categories
                           </td>
                         </tr>
                     @endforelse
                   </tbody>
             </table>
             <div class='w-100 d-flex justify-content-end'>
-                {{ $products->links() }}
+                {{ $categories->links() }}
             </div>
         </div>
     </div>
