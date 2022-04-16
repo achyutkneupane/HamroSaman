@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,9 +23,15 @@ class DatabaseSeeder extends Seeder
             'full_name' => 'Achyut Neupane',
             'email' => 'achyutkneupane@gmail.com',
             'password' => Hash::make('Ghost0vperditi0n'),
+            'role' => 'admin'
         ]);
-        Category::factory(5)->create()->each(function ($category) {
-            $category->products()->saveMany(Product::factory(10)->make());
+        collect(['Electronics','Furniture','Others'])->each(function($category) {
+            Category::create([
+                'name' => $category,
+                'slug' => Str::slug($category)
+            ])->each(function ($category) {
+                $category->products()->saveMany(Product::factory(10)->make());
+            });
         });
     }
 }
