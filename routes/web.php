@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,7 @@ Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('home');
 Route::get('/dashboard/products', [HomeController::class, 'products'])->name('user.products.index');
 Route::get('/dashboard/product/add', [HomeController::class, 'addProduct'])->name('user.products.create');
 Route::post('/dashboard/product/add', [HomeController::class, 'addProductSubmit'])->name('user.products.create.submit');
+Route::post('/dashboard/product/comment', [CommentController::class, 'create'])->name('user.products.comment.add');
 // all products
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::post('/products', [ProductController::class, 'search'])->name('products.search');

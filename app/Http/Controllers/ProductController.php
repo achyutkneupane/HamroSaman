@@ -17,7 +17,7 @@ class ProductController extends Controller
     }
     public function show($slug)
     {
-        $product = Product::with('user', 'category')->where('slug', $slug)->firstOrFail();
+        $product = Product::with('user', 'category','comments')->where('slug', $slug)->firstOrFail();
         return view('products.show', compact('product'));
     }
     public function search(ProductSearchRequest $request)

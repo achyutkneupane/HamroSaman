@@ -23,6 +23,10 @@ class Product extends Model
     {
         return $this->hasOne(Auction::class);
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->orderBy('created_at', 'desc');
+    }
 
     public function scopeCategorySearch($query, $category)
     {
