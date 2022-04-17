@@ -10,8 +10,33 @@
             </div>
             <div class="col-md-7 mt-3">
                 <div class="card p-3 bg-white  d-flex flex-column gap-2">
-                    <div class="display-6 fw-bolder">
-                        {{ $product->name }}
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="display-6 fw-bolder">
+                                {{ $product->name }}
+                            </div>
+                            <div class="
+                                @if($auctionStatus == 'upcoming')
+                                text-muted
+                                @elseif($auctionStatus == 'active')
+                                text-success
+                                @elseif($auctionStatus == 'ended')
+                                text-danger
+                                @endif">
+                                    Auction {{ $auctionTimeDiff }}
+                            </div>
+                        </div>
+                        @if($product->auction->bids()->bidPlaced())
+                        <div>
+                            <form action="{{ route('products.cancel') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <button type="submit" class="btn btn-danger">
+                                    Cancel Bid
+                                </button>
+                            </form>
+                        </div>
+                        @endif
                     </div>
                     <div class="h4 text-danger">
                         Rs. {{ $product->min_price }}
@@ -38,7 +63,27 @@
                         <dt class="col-sm-3">Category</dt>
                         <dd class="col-sm-9">{{ $product->category->name }}</dd>
                     </dl>
-
+                    @if($auctionStatus == 'active')
+                    <div>
+                        @if(!$product->auction->bids()->bidPlaced())
+                        <form action="{{ route('products.buy') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <div class="form-group mb-2 w-50">
+                                <label for="amount">Bid Amount</label>
+                                <input type="number" name="amount" id="amount" placeholder="Enter Bid Amount" value="{{ old('amount') ?? $product->min_price }}" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-success">
+                                Place an order
+                            </button>
+                        </form>
+                        @else
+                        <div class="alert alert-success">
+                            Bid Placed for Rs. {{ $product->auction->bids()->getBid()->amount }}
+                        </div>
+                        @endif
+                    </div>
+                    @endif
                     {{-- comments --}}
                     <div class="mt-3">
                         <h5 class="h2 text-uppercase">Comments</h5>

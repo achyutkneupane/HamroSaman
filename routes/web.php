@@ -34,6 +34,12 @@ Route::post('/products', [ProductController::class, 'search'])->name('products.s
 // show product
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 
+// buy product
+Route::post('/products/buy', [ProductController::class, 'placeOrder'])->name('products.buy');
+
+// cancel bid
+Route::post('/products/cancel', [ProductController::class, 'cancelBid'])->name('products.cancel');
+
 // admin links
 Route::group(['prefix' => 'admin','as'=>'admin.'], function() {
     Route::get('/', [AdminController::class, 'index'])->name('home');
