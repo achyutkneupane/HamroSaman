@@ -25,6 +25,7 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('home');
 Route::get('/dashboard/products', [HomeController::class, 'products'])->name('user.products.index');
+Route::get('/dashboard/products/{slug}', [HomeController::class, 'showProduct'])->name('user.products.show');
 Route::get('/dashboard/product/add', [HomeController::class, 'addProduct'])->name('user.products.create');
 Route::post('/dashboard/product/add', [HomeController::class, 'addProductSubmit'])->name('user.products.create.submit');
 Route::post('/dashboard/product/comment', [CommentController::class, 'create'])->name('user.products.comment.add');
@@ -33,6 +34,12 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 Route::post('/products', [ProductController::class, 'search'])->name('products.search');
 // show product
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
+
+// buy product
+Route::post('/products/buy', [ProductController::class, 'placeOrder'])->name('products.buy');
+
+// cancel bid
+Route::post('/products/cancel', [ProductController::class, 'cancelBid'])->name('products.cancel');
 
 // admin links
 Route::group(['prefix' => 'admin','as'=>'admin.'], function() {

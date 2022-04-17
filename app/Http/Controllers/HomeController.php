@@ -37,6 +37,10 @@ class HomeController extends Controller
         $products = auth()->user()->products()->with('category','user')->orderByDesc('created_at')->paginate(9);
         return view('auth.dashboard.products.index', compact('products'));
     }
+    public function showProduct($slug) {
+        $product = auth()->user()->products()->where('slug', $slug)->firstOrFail();
+        return view('auth.dashboard.products.show',compact('product'));
+    }
     public function addProduct() {
         $categories = Category::all();
         return view('auth.dashboard.products.create',compact('categories'));
