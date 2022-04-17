@@ -27,6 +27,10 @@ class Product extends Model
     {
         return $this->hasMany(Comment::class)->orderBy('created_at', 'desc');
     }
+    public function chatBoxes()
+    {
+        return $this->hasMany(ChatBox::class);
+    }
 
     public function scopeCategorySearch($query, $category)
     {

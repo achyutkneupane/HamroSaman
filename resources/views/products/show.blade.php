@@ -99,7 +99,38 @@
                         @endif
                     </div>
                     @endif
-                    {{-- comments --}}
+                    @if($product->user != auth()->user())
+                    @if(!$product->chatBoxes()->where('user_id',auth()->id())->exists())
+                    <div class="mt-3">
+                        <h5 class="h2 text-uppercase">Message</h5>
+                        <div class="mt-3">                            
+                            <form action="{{ route('user.products.chatbox.create') }}" method="POST" class="d-flex flex-column justify-content-start pb-4 gap-2">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <div class="form-group">
+                                    <label for="message" class="text-left">Message</label>
+                                    <textarea name="message" id="message" rows="2"
+                                        class="form-control @error('message') is-invalid @enderror">{{ old('message') }}</textarea>
+                                    @error('message')
+                                        <span class="invalid-feedback" role="alert">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
+                                </div>
+                                <button type="submit" class="btn btn-primary">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                    @else
+                    <div class="mt-3">
+                        <h5 class="h2 text-uppercase">Message</h5>
+                        <div class="mt-3">
+                            <div class="alert alert-success">
+                                You have already sent a message to this product. <a href="{{ route('user.messages.show', $product->chatBoxes()->where('user_id',auth()->id())->first()->id) }}">View Chat</a>
+                            </div>
+                        </div>
+                    @endif
+                    @endif
                     <div class="mt-3">
                         <h5 class="h2 text-uppercase">Comments</h5>
                         {{-- add comment --}}

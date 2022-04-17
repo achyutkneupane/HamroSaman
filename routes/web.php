@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ChatBoxController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
@@ -49,3 +51,8 @@ Route::group(['prefix' => 'admin','as'=>'admin.'], function() {
     Route::get('/products', [AdminController::class, 'products'])->name('products.index');
     Route::get('/categories', [AdminController::class, 'categories'])->name('categories.index');
 });
+
+Route::get('/messages', [ChatBoxController::class, 'index'])->name('user.messages.index');
+Route::post('/messages', [ChatBoxController::class, 'create'])->name('user.products.chatbox.create');
+Route::get('/messages/{id}', [ChatBoxController::class, 'show'])->name('user.messages.show');
+Route::post('/message', [ChatController::class, 'create'])->name('user.messages.create');
