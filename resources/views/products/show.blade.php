@@ -26,16 +26,24 @@
                                     Auction {{ $auctionTimeDiff }}
                             </div>
                         </div>
-                        @if($product->auction->bids()->bidPlaced())
-                        <div>
-                            <form action="{{ route('products.cancel') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <button type="submit" class="btn btn-danger">
-                                    Cancel Bid
-                                </button>
-                            </form>
-                        </div>
+                        @if($product->user != auth()->user())
+                            @if($product->auction && $product->auction->bids()->bidPlaced())
+                            <div>
+                                <form action="{{ route('products.cancel') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <button type="submit" class="btn btn-danger">
+                                        Cancel Bid
+                                    </button>
+                                </form>
+                            </div>
+                            @endif
+                        @else
+                            <div>
+                                <a href="{{ route('user.products.show', $product->slug) }}" class="btn btn-primary">
+                                    View All Bids
+                                </a>
+                            </div>
                         @endif
                     </div>
                     <div class="h4 text-danger">
@@ -65,22 +73,29 @@
                     </dl>
                     @if($auctionStatus == 'active')
                     <div>
-                        @if(!$product->auction->bids()->bidPlaced())
-                        <form action="{{ route('products.buy') }}" method="post">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <div class="form-group mb-2 w-50">
-                                <label for="amount">Bid Amount</label>
-                                <input type="number" name="amount" id="amount" placeholder="Enter Bid Amount" value="{{ old('amount') ?? $product->min_price }}" class="form-control">
+
+                        @if($product->user != auth()->user())
+                            @if(!$product->auction->bids()->bidPlaced())
+                            <form action="{{ route('products.buy') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <div class="form-group mb-2 w-50">
+                                    <label for="amount">Bid Amount</label>
+                                    <input type="number" name="amount" id="amount" placeholder="Enter Bid Amount" value="{{ old('amount') ?? $product->min_price }}" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-success">
+                                    Place an order
+                                </button>
+                            </form>
+                            @else
+                            <div class="alert alert-success">
+                                Bid Placed for Rs. {{ $product->auction->bids()->getBid()->amount }}
                             </div>
-                            <button type="submit" class="btn btn-success">
-                                Place an order
-                            </button>
-                        </form>
+                            @endif
                         @else
-                        <div class="alert alert-success">
-                            Bid Placed for Rs. {{ $product->auction->bids()->getBid()->amount }}
-                        </div>
+                            <div class="alert alert-success">
+                                You are the owner of this product.
+                            </div>
                         @endif
                     </div>
                     @endif

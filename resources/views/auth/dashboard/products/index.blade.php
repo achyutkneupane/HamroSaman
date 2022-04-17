@@ -20,6 +20,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Price</th>
                         <th scope="col">Category</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,6 +30,9 @@
                             <td>{{ $product->name }}</td>
                             <td>Rs. {{ $product->min_price }}</td>
                             <td>{{ $product->category->name }}</td>
+                            <td>
+                                <a href="{{ route('user.products.show',$product->slug) }}" class="btn btn-primary">View</a>
+                            </td>
                         </tr>
                     @empty
                         <tr>

@@ -25,6 +25,7 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('home');
 Route::get('/dashboard/products', [HomeController::class, 'products'])->name('user.products.index');
+Route::get('/dashboard/products/{slug}', [HomeController::class, 'showProduct'])->name('user.products.show');
 Route::get('/dashboard/product/add', [HomeController::class, 'addProduct'])->name('user.products.create');
 Route::post('/dashboard/product/add', [HomeController::class, 'addProductSubmit'])->name('user.products.create.submit');
 Route::post('/dashboard/product/comment', [CommentController::class, 'create'])->name('user.products.comment.add');
