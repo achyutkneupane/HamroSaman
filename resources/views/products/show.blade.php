@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         @if($product->user != auth()->user())
-                            @if($product->auction && $product->auction->bids()->bidPlaced() && !$product->auction->isEnded())
+                            @if($product->auction && $product->auction->bids()->bidPlaced())
                             <div>
                                 <form action="{{ route('products.cancel') }}" method="post">
                                     @csrf
@@ -98,17 +98,6 @@
                             </div>
                         @endif
                     </div>
-                    @else
-                        @if($product->auction->winning_bid->user == auth()->user())
-                            <div class="alert alert-success">
-                                You are now the owner of this product.
-                            </div>
-                        @else
-                            <div class="alert alert-danger">
-                                The auction ended.
-                            </div>
-                        @endif
-
                     @endif
                     @if($product->user != auth()->user())
                     @if(!$product->chatBoxes()->where('user_id',auth()->id())->exists())
