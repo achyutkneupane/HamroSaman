@@ -50,7 +50,7 @@
                                     <div
                                         class="col-md-10 py-1 rounded d-flex justify-content-start gap-4 align-items-center @if ($chat->direction == 'right') bg-light text-dark @elseif($chat->direction == 'left') bg-dark text-white @endif">
                                         <img src="{{ $chat->user->profile_picture
-                                            ? asset(Storage::url($comment->user->profile_picture))
+                                            ? asset(Storage::url($chat->user->profile_picture))
                                             : 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_640.png' }}"
                                             class="rounded-circle" style="width: 10%; height: auto;" />
                                         <div class="d-flex text-start flex-column gap-1 w-100">

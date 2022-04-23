@@ -6,6 +6,7 @@ use App\Http\Requests\AddProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class HomeController extends Controller
@@ -15,10 +16,6 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Show the application dashboard.
@@ -30,6 +27,35 @@ class HomeController extends Controller
         $products = Product::with('category','user')->orderByDesc('created_at')->paginate(9);
         return view('welcome',compact('products'));
     }
+
+    public function profile() {
+        $user = auth()->user();
+        return view('auth.dashboard.profile.index', compact('user'));
+    }
+
+    public function editProfile() {
+        $user = auth()->user();
+        return view('auth.dashboard.profile.edit', compact('user'));
+    }
+    public function updateProfile(Request $request) {
+        $validated = $request->validate([
+            'full_name' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'father_name' => 'required',
+            'mother_name' => 'required',
+            'dob' => 'required',
+            'profile_picture' => ''
+        ]);
+        if($request->hasFile('profile_picture')){
+            $extension = $request->file('profile_picture')->getClientOriginalExtension();
+            $fileName = 'profile_picture-' . auth()->id() . '.' . $extension;
+            $validated['profile_picture'] = $request->file('profile_picture')->storeAs('public/profile-picture', $fileName);
+        }
+        auth()->user()->update(collect($validated)->except('_token')->toArray());
+        return redirect()->route('profile.index');
+    }
+
     public function dashboard() {
         return view('auth.dashboard.index');
     }

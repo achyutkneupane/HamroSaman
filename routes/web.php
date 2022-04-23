@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 // Auth Routes
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('home');
@@ -33,9 +33,11 @@ Route::post('/dashboard/product/add', [HomeController::class, 'addProductSubmit'
 Route::post('/dashboard/product/comment', [CommentController::class, 'create'])->name('user.products.comment.add');
 // all products
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::post('/products', [ProductController::class, 'search'])->name('products.search');
+Route::post('/products', [ProductController::class, 'index'])->name('products.search');
 // show product
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
+// delete product
+Route::get('/products/{slug}/delete', [ProductController::class, 'delete'])->name('products.delete');
 
 // buy product
 Route::post('/products/buy', [ProductController::class, 'placeOrder'])->name('products.buy');
@@ -56,3 +58,9 @@ Route::get('/messages', [ChatBoxController::class, 'index'])->name('user.message
 Route::post('/messages', [ChatBoxController::class, 'create'])->name('user.products.chatbox.create');
 Route::get('/messages/{id}', [ChatBoxController::class, 'show'])->name('user.messages.show');
 Route::post('/message', [ChatController::class, 'create'])->name('user.messages.create');
+
+
+// Profile
+Route::get('/profile', [HomeController::class, 'profile'])->name('profile.index');
+Route::get('/profile/edit', [HomeController::class, 'editProfile'])->name('profile.edit');
+Route::post('/profile/edit', [HomeController::class, 'updateProfile'])->name('profile.update');

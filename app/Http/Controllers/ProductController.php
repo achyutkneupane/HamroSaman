@@ -6,16 +6,41 @@ use App\Http\Requests\PlaceOrderRequest;
 use App\Http\Requests\ProductSearchRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Notifications\BidNotification;
+use App\Notifications\BidNotificationToOwner;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(ProductSearchRequest $request)
     {
+        $searchData = $request->all();
+        // dd($searchData);
+        $searchTerm = $request->search_term;
+        $searchCategory = $request->search_category;
+        $minPrice = $request->min_price;
+        $maxPrice = $request->max_price;
+        $sortTerm = $request->sort_by;
+
         $categories = Category::all();
-        $products = Product::with('user', 'category')->orderByDesc('created_at')->paginate(21);
-        return view('products.index', compact('products', 'categories'));
+        $products = Product::with('user', 'category')
+                            ->searchterm($searchTerm)
+                            ->categorySearch($searchCategory)
+                            ->minPrice($minPrice)
+                            ->maxPrice($maxPrice)
+                            ->sortByTerm($sortTerm)
+                            ->paginate(21);
+        return view('products.index', compact(
+                                    'products',
+                                    'categories',
+                                    'searchTerm',
+                                    'searchCategory',
+                                    'minPrice',
+                                    'maxPrice',
+                                    'sortTerm',
+                                    'searchData'
+                                ));
     }
     public function show($slug)
     {
@@ -36,23 +61,19 @@ class ProductController extends Controller
         }
         return view('products.show', compact('product','auctionStatus','auctionTimeDiff'));
     }
-    public function search(ProductSearchRequest $request)
-    {
-        $categories = Category::all();
-        $products = Product::with('user', 'category')
-                           ->searchterm($request->search_term)
-                           ->categorySearch($request->search_category)
-                           ->minPrice($request->min_price)
-                            ->maxPrice($request->max_price)
-                           ->paginate(21);
-        return view('products.index', compact('products', 'categories'));
+    public function delete($slug) {
+        $product = Product::where('slug', $slug)->firstOrFail();
+        $product->delete();
+        return redirect()->route('admin.products.index');
     }
     public function placeOrder(PlaceOrderRequest $request) {
         $product = Product::findOrFail($request->product_id);
-        $product->auction->bids()->create([
+        $bid = $product->auction->bids()->create([
             'user_id' => auth()->id(),
             'amount' => $request->amount
         ]);
+        $product->user->notify(new BidNotificationToOwner($bid));
+        auth()->user()->notify(new BidNotification($bid));
         return redirect()->route('products.show', $product->slug);
     }
     public function cancelBid(Request $request) {
