@@ -4,6 +4,11 @@
         aria-current="true">
         Dashboard
     </a>
+    <a href="{{ route('profile.index') }}"
+        class="list-group-item list-group-item-action{{ request()->routeIs('profile.*') ? ' active' : '' }}"
+        aria-current="true">
+        Profile
+    </a>
     <a href="{{ route('user.products.index') }}"
         class="list-group-item list-group-item-action{{ request()->routeIs('user.products.*') ? ' active' : '' }}"
         aria-current="true">

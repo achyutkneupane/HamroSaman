@@ -111,7 +111,7 @@
                 <dt class="col-sm-3">Description</dt>
                 <dd class="col-sm-9 row">
                     <div class='col-md-12'>
-                        <textarea name="description" rows="5" class="form-control @error('description') is-invalid @enderror" placeholder="Minimum Price">{{ old('description') }}</textarea>
+                        <textarea name="description" rows="5" class="form-control @error('description') is-invalid @enderror" placeholder="Description">{{ old('description') }}</textarea>
                         @error('description')
                             <div class="text-danger mt-1">{{ $message }}</div>
                         @enderror

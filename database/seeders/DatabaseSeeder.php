@@ -18,20 +18,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(20)->create();
         User::create([
-            'full_name' => 'Achyut Neupane',
-            'email' => 'achyutkneupane@gmail.com',
-            'password' => Hash::make('Ghost0vperditi0n'),
+            'full_name' => 'HamroSaman Admin',
+            'email' => 'admin@hamrosaman.com',
+            'password' => Hash::make('password'),
             'role' => 'admin'
         ]);
+        User::factory(20)->create();
         collect(['Electronics','Furniture','Others'])->each(function($category) {
             Category::create([
                 'name' => $category,
                 'slug' => Str::slug($category)
-            ])->each(function ($category) {
-                $category->products()->saveMany(Product::factory(10)->make());
-            });
+            ]);
+            // ])->each(function ($category) {
+            //     $category->products()->saveMany(Product::factory(100)->make());
+            // });
         });
     }
 }

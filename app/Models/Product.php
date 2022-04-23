@@ -56,4 +56,21 @@ class Product extends Model
             return $query->where('min_price', '<=', $maxPrice);
         }
     }
+    public function scopeSortByTerm($query,$sortTerm) {
+        if($sortTerm == 'price_asc') {
+            return $query->orderBy('min_price', 'asc');
+        }
+        elseif($sortTerm == 'price_desc') {
+            return $query->orderBy('min_price', 'desc');
+        }
+        elseif($sortTerm == 'alpha_asc') {
+            return $query->orderBy('name', 'asc');
+        }
+        elseif($sortTerm == 'alpha_desc') {
+            return $query->orderBy('name', 'desc');
+        }
+        else {
+            return $query->orderBy('created_at', 'desc');
+        }
+    }
 }

@@ -36,7 +36,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td class="text-white text-center bg-danger" colspan="4">
+                            <td class="text-white text-center bg-danger" colspan="5">
                                 No Products
                             </td>
                         </tr>
