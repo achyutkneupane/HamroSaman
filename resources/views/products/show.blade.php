@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         @if($product->user != auth()->user())
-                            @if($product->auction && $product->auction->bids()->bidPlaced())
+                            @if($product->auction && $product->auction->bids()->bidPlaced() && !$product->auction->isEnded())
                             <div>
                                 <form action="{{ route('products.cancel') }}" method="post">
                                     @csrf
@@ -81,7 +81,7 @@
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <div class="form-group mb-2 w-50">
                                     <label for="amount">Bid Amount</label>
-                                    <input type="number" name="amount" id="amount" placeholder="Enter Bid Amount" value="{{ old('amount') ?? $product->min_price }}" class="form-control">
+                                    <input type="number" name="amount" id="amount" placeholder="Enter Bid Amount" value="{{ old('amount') ?? $product->min_price }}" min="{{ $product->min_price }}" class="form-control">
                                 </div>
                                 <button type="submit" class="btn btn-success">
                                     Place an order
@@ -98,6 +98,17 @@
                             </div>
                         @endif
                     </div>
+                    @else
+                        @if($product->auction->winning_bid->user == auth()->user())
+                            <div class="alert alert-success">
+                                You are now the owner of this product.
+                            </div>
+                        @else
+                            <div class="alert alert-danger">
+                                The auction ended.
+                            </div>
+                        @endif
+
                     @endif
                     @if($product->user != auth()->user())
                     @if(!$product->chatBoxes()->where('user_id',auth()->id())->exists())

@@ -19,11 +19,11 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="bg-white">
+<body style="background-color: #d9c7b8">
     <div id="app">
         @include('layouts.header')
 
-        <main class="py-4">
+        <main class="@if(request()->routeIs('welcome') || request()->routeIs('login') || request()->routeIs('register')) py-0 @else py-4 @endif">
             @if(request()->routeIs('admin.*'))
             <div class="container">
                 <div class="row">

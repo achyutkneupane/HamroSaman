@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('chat_box_id');
+            $table->unsignedBigInteger('chat_box_id')->nullable();
             $table->text('message');
             $table->enum('sender',array('buyer','seller'));
             $table->timestamps();
-            $table->foreign('chat_box_id')->references('id')->on('chat_boxes');
+            $table->foreign('chat_box_id')->references('id')->on('chat_boxes')->onDelete('set null');
         });
     }
 

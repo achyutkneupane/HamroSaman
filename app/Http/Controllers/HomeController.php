@@ -67,6 +67,10 @@ class HomeController extends Controller
         $product = auth()->user()->products()->where('slug', $slug)->firstOrFail();
         return view('auth.dashboard.products.show',compact('product'));
     }
+    public function deleteProduct($slug) {
+        $product = auth()->user()->products()->where('slug', $slug)->firstOrFail()->delete();
+        return redirect()->route('user.products.index');
+    }
     public function addProduct() {
         $categories = Category::all();
         return view('auth.dashboard.products.create',compact('categories'));
