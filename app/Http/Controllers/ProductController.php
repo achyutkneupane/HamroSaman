@@ -18,7 +18,7 @@ class ProductController extends Controller
         $searchData = $request->all();
         // dd($searchData);
         $searchTerm = $request->search_term;
-        $searchCategory = $request->search_category;
+        $searchCategory = $request->search_category != 'all' ? $request->search_category : '';
         $minPrice = $request->min_price;
         $maxPrice = $request->max_price;
         $sortTerm = $request->sort_by;

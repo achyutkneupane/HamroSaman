@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm py-4">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm py-4 sticky-top">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             <h3 class='text-uppercase'>{{ config('app.name', 'Laravel') }}</h3>

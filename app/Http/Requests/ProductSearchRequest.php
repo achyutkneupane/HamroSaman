@@ -28,7 +28,7 @@ class ProductSearchRequest extends FormRequest
         return [
             'sort_by' => 'nullable|string',
             'search_term' => 'nullable|string|min:3',
-            'search_category' => 'nullable|exists:categories,id',
+            'search_category' => 'nullable',
             'min_price' => 'nullable|numeric|min:0',
             'max_price' => 'nullable|numeric|min:0',
         ];

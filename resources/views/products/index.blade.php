@@ -41,6 +41,7 @@
                             <label for="search_category">Category</label>
                             <select class="form-select" name="search_category" aria-label="Select Category">
                                 <option selected disabled>Select category</option>
+                                <option value="all">All</option>
                                 @foreach ($categories as $category)
                                     <option @if($category->id == $searchCategory)selected @endif value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
@@ -73,41 +74,45 @@
                         @forelse ($products as $product)
                             <div class="col-md-12 my-3 bg-white">
                                 <div class="d-flex justify-content-center py-2">
-                                    <div>
-                                        <div class="about-product text-center row align-items-center mt-2">
-                                            <img
+                                    <div class="w-100">
+                                        <div class="about-product text-center row align-items-center justify-content-between mt-2">
+                                            <div class="col-md-4">
+                                                <img
                                                 src="{{ $product->image ? asset(Storage::url($product->image)) : 'https://www.aaronfaber.com/wp-content/uploads/2017/03/product-placeholder-wp.jpg' }}"
-                                                class="col-md-4"
+                                                class=""
                                                 width="300">
-                                            <div class='col-md-8 mt-3 d-flex flex-column gap-1'>
-                                                <h5 class="mt-2 d-flex justify-content-between">
-                                                    <span class="h2">{{ $product->name }}</span>
-                                                    <div>
-                                                        <h3 class='text-danger'>Rs. {{ $product->min_price }}</h3>
-                                                    </div>
-                                                </h5>
-                                                <h5 class="mt-2 d-flex justify-content-between">
-                                                    <span class='text-black-50'>
-                                                        Category:
-                                                    </span>
-                                                    <div>
-                                                        {{ $product->category->name }}
-                                                    </div>
-                                                </h5>
-                                                <h5 class="mt-2 d-flex justify-content-between">
-                                                    <span class='text-black-50'>
-                                                        Uploaded by:
-                                                    </span>
-                                                    <div>
-                                                        {{ $product->user->full_name }}
-                                                    </div>
-                                                </h5>
-                                                <a href="{{ route('products.show',$product->slug) }}">
-                                                    <h4 class="w-100 btn btn-primary">Goto Product</h4>
-                                                </a>
-                                                @if($product->user == auth()->user())
-                                                <span class='text-danger'>[Your Product]</span>
-                                                @endif
+                                            </div>
+                                            <div class='col-md-8'>
+                                                <div class="mt-3 d-flex flex-column gap-1">
+                                                    <h5 class="mt-2 d-flex justify-content-between">
+                                                        <span class="h2">{{ $product->name }}</span>
+                                                        <div>
+                                                            <h3 class='text-danger'>Rs. {{ $product->min_price }}</h3>
+                                                        </div>
+                                                    </h5>
+                                                    <h5 class="mt-2 d-flex justify-content-between">
+                                                        <span class='text-black-50'>
+                                                            Category:
+                                                        </span>
+                                                        <div>
+                                                            {{ $product->category->name }}
+                                                        </div>
+                                                    </h5>
+                                                    <h5 class="mt-2 d-flex justify-content-between">
+                                                        <span class='text-black-50'>
+                                                            Uploaded by:
+                                                        </span>
+                                                        <div>
+                                                            {{ $product->user->full_name }}
+                                                        </div>
+                                                    </h5>
+                                                    <a href="{{ route('products.show',$product->slug) }}">
+                                                        <h4 class="w-100 btn btn-primary">Goto Product</h4>
+                                                    </a>
+                                                    @if($product->user == auth()->user())
+                                                    <span class='text-danger'>[Your Product]</span>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
