@@ -8,7 +8,7 @@
             <div
                 class="row justify-content-center align-items-center text-white d-flex flex-column-reverse flex-md-row-reverse">
                 <div class="col-md-6 text-center d-md-flex d-none align-items-center" style="height: 720px;">
-                    <img src="https://www.pngmart.com/files/7/Desktop-Computer-PNG-Pic.png" alt="{{ config('app.name') }}"
+                    <img src="https://www.pngall.com/wp-content/uploads/11/Wooden-Furniture-Chair-PNG-Photo.png" alt="{{ config('app.name') }}"
                         class='w-100'>
                 </div>
                 <div class="col-md-6">

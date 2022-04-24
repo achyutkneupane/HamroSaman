@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row justify-content-center align-items-center">
                 <div class="col-md-6 text-center d-flex align-items-center" style="height: 720px;">
-                    <img src="https://www.pngall.com/wp-content/uploads/12/Computer-Printer-Background-PNG.png"
+                    <img src="https://www.downloadclipart.net/large/home-appliance-png-image.png"
                         alt="{{ config('app.name') }}" class='w-100'>
                 </div>
                 <div class="col-md-6 d-flex flex-column justify-content-center align-items-center gap-0 text-white">
@@ -26,7 +26,7 @@
         </div>
     </div>
     @auth
-    <div class="container-fluid mt-0 py-5">
+    <div class="container mt-0 py-5">
         <div class="row d-flex flex-column gap-4 justify-content-center">
             <div class="col-md-12 text-center display-5 text-uppercase">
                 Products
@@ -34,8 +34,8 @@
             <div class="row">
                 @forelse ($products as $product)
                     <div class="col-md-4">
-                        <div class="d-flex justify-content-center container mt-5">
-                            <div class="card p-3 bg-white">
+                        <div class="d-flex justify-content-center container mt-5 w-100">
+                            <div class="card p-3 bg-white w-100">
                                 <div class="about-product text-center mt-2">
                                     <img
                                         src="{{ $product->image ? asset(Storage::url($product->image)) : 'https://www.aaronfaber.com/wp-content/uploads/2017/03/product-placeholder-wp.jpg' }}"
@@ -67,7 +67,7 @@
                 @empty
                 @endforelse
             </div>
-            <div class="d-flex justify-content-center">
+            <div class="d-flex flex-column justify-content-end">
                 {!! $products->links() !!}
             </div>
         </div>

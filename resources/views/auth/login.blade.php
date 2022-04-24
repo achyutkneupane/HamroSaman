@@ -68,7 +68,7 @@
                     </form>
                 </div>
                 <div class="col-md-6 text-center d-md-flex d-none align-items-center" style="height: 720px;">
-                    <img src="https://www.pngkey.com/png/full/4-44599_coffs-harbour-computers-computer-laptops-and-computers.png"
+                    <img src="https://www.pngall.com/wp-content/uploads/8/Home-Kitchen-Appliances-PNG-Free-Download.png"
                         alt="{{ config('app.name') }}" class='w-100'>
                 </div>
             </div>
