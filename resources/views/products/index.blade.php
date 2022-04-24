@@ -71,32 +71,34 @@
                 <div class="col-md-9">
                     <div class="row">
                         @forelse ($products as $product)
-                            <div class="col-md-4 my-3">
-                                <div class="d-flex justify-content-center">
-                                    <div class="card p-3 bg-white">
-                                        <h6 class="mt-0 text-danger text-center">
-                                            Category: <span class="fw-bolder">{{ $product->category->name }}</span>
-                                        </h6>
+                            <div class="col-md-4 my-3 bg-white">
+                                <div class="d-flex justify-content-center py-2">
+                                    <div>
                                         <div class="about-product text-center mt-2">
-                                            <img src="{{ $product->image ? asset(Storage::url($product->image)) : 'https://www.aaronfaber.com/wp-content/uploads/2017/03/product-placeholder-wp.jpg' }}" class="w-100">
-                                            <div class='mt-3'>
+                                            <img
+                                                src="{{ $product->image ? asset(Storage::url($product->image)) : 'https://www.aaronfaber.com/wp-content/uploads/2017/03/product-placeholder-wp.jpg' }}"
+                                                class=""
+                                                width="300">
+                                            <div class='mt-3 d-flex flex-column gap-1'>
+                                                <h5 class="mt-0 text-primary text-center">
+                                                    <span class="fw-bolder">{{ $product->category->name }}</span>
+                                                </h5>
                                                 <h5 class='text-danger'>Rs. {{ $product->min_price }}</h5>
                                                 <a href="{{ route('products.show',$product->slug) }}">
-                                                    <h4 class="text-primary">{{ $product->name }}</h4>
+                                                    <h4 class="w-100 btn btn-primary">{{ $product->name }}</h4>
                                                 </a>
                                                 @if($product->user == auth()->user())
                                                 <span class='text-danger'>[Your Product]</span>
                                                 @endif
-                                                <h6 class="mt-0 d-flex justify-content-between">
+                                                <h6 class="mt-2 d-flex justify-content-between">
                                                     <span class='text-black-50'>
                                                         Uploaded by:
                                                     </span>
-                                                    <span>
+                                                    <div>
                                                         {{ $product->user->full_name }}
-                                                    </span>
+                                                    </div>
                                                 </h6>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>

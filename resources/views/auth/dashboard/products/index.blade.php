@@ -32,6 +32,7 @@
                             <td>{{ $product->category->name }}</td>
                             <td>
                                 <a href="{{ route('user.products.show',$product->slug) }}" class="btn btn-primary">View</a>
+                                <a href="{{ route('user.products.delete',$product->slug) }}" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
                     @empty
