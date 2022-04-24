@@ -35,17 +35,16 @@ class EventServiceProvider extends ServiceProvider
         if(Schema::hasTable('auctions') && Schema::hasTable('bids')) {
             $to_end = Auction::with('bids','product.user')->where('winner_id', null)->where('end_at', '<', Carbon::now())->get();
             if($to_end->count() <= 0) return;
-            else {
-                $to_end->each(function($auction) {
-                    $highest_bid = $auction->bids()->orderBy('amount', 'desc')->first();
-                    $highest_bid->is_winner = true;
-                    $highest_bid->save();
-                    $auction->winner_id = $highest_bid->user_id;
-                    $auction->save();
-                    $auction->product->user->notify(new AuctionEnded($auction));
-                    $highest_bid->user->notify(new ProductBought($auction));
-                });
-            }
+            $to_end->each(function($auction) {
+                if($auction->bids()->count() <= 0) return;
+                $highest_bid = $auction->bids()->orderBy('amount', 'desc')->first();
+                $highest_bid->is_winner = true;
+                $highest_bid->save();
+                $auction->winner_id = $highest_bid->user_id;
+                $auction->save();
+                $auction->product->user->notify(new AuctionEnded($auction));
+                $highest_bid->user->notify(new ProductBought($auction));
+            });
         }
     }
 
