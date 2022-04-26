@@ -87,7 +87,7 @@
                                                     <h5 class="mt-2 d-flex justify-content-between">
                                                         <span class="h2">{{ $product->name }}</span>
                                                         <div>
-                                                            <h3 class='text-danger'>Rs. {{ $product->min_price }}</h3>
+                                                            <h3 class='text-danger'>Rs. {{ $product->auction->highest_bid ? $product->auction->highest_bid->amount : $product->min_price }}</h3>
                                                         </div>
                                                     </h5>
                                                     <h5 class="mt-2 d-flex justify-content-between">

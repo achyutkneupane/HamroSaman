@@ -23,6 +23,12 @@ class Auction extends Model
     {
         return $this->hasMany(Bid::class);
     }
+
+    
+    public function highest_bid()
+    {
+        return $this->hasOne(Bid::class)->orderBy('amount', 'desc');
+    }
     public function winning_bid()
     {
         return $this->hasOne(Bid::class)->where('is_winner', true);

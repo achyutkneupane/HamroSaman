@@ -22,7 +22,7 @@ class ProductFactory extends Factory
             'slug' => \Illuminate\Support\Str::slug($title),
             'description' => $this->faker->sentence,
             'user_id' => $this->faker->numberBetween(1, 20),
-            'category_id' => $this->faker->numberBetween(1, 5),
+            'category_id' => $this->faker->numberBetween(1, 3),
             'min_price' => $this->faker->numberBetween(100, 1000000),
         ];
     }

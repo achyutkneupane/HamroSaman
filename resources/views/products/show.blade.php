@@ -47,7 +47,7 @@
                         @endif
                     </div>
                     <div class="h4 text-danger">
-                        Rs. {{ $product->min_price }}
+                        Rs. {{ $min_price }}
                     </div>
                     <div class='text-muted'>
                         {{ $product->description }}
@@ -81,7 +81,7 @@
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <div class="form-group mb-2 w-50">
                                     <label for="amount">Bid Amount</label>
-                                    <input type="number" name="amount" id="amount" placeholder="Enter Bid Amount" value="{{ old('amount') ?? $product->min_price }}" min="{{ $product->min_price }}" class="form-control">
+                                    <input type="number" name="amount" id="amount" placeholder="Enter Bid Amount" value="{{ old('amount') ?? $min_price }}" min="{{ $min_price }}" class="form-control">
                                 </div>
                                 <button type="submit" class="btn btn-success">
                                     Place an order
@@ -99,7 +99,7 @@
                         @endif
                     </div>
                     @else
-                        @if($product->auction->winning_bid->user == auth()->user())
+                        @if($product->auction && $product->auction->winning_bid && $product->auction->winning_bid->user == auth()->user())
                             <div class="alert alert-success">
                                 You are now the owner of this product.
                             </div>

@@ -47,7 +47,9 @@ class ProductController extends Controller
         $product = Product::with('user', 'category','comments','auction.bids')->where('slug', $slug)->firstOrFail();
         $auctionStatus = false;
         $auctionTimeDiff = "Not Started";
+        $min_price = $product->min_price;
         if($product->auction) {
+            $min_price = $product->auction->highest_bid ? $product->auction->highest_bid->amount : $product->min_price;
             if (Carbon::parse($product->auction->start_at)->isFuture()) {
                 $auctionStatus = 'upcoming';
                 $auctionTimeDiff = 'Starting in '.Carbon::parse($product->auction->start_at)->diffForHumans();
@@ -59,7 +61,7 @@ class ProductController extends Controller
                 $auctionTimeDiff = 'Ended '.Carbon::parse($product->auction->end_at)->diffForHumans();
             }
         }
-        return view('products.show', compact('product','auctionStatus','auctionTimeDiff'));
+        return view('products.show', compact('product','auctionStatus','auctionTimeDiff','min_price'));
     }
     public function delete($slug) {
         $product = Product::where('slug', $slug)->firstOrFail();

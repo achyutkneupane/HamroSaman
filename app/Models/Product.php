@@ -47,13 +47,29 @@ class Product extends Model
     public function scopeMinPrice($query, $minPrice)
     {
         if ($minPrice) {
-            return $query->where('min_price', '>=', $minPrice);
+            $resultQuery = $query->where('min_price', '>=', $minPrice)
+                                 ->orWhere(function($query) use ($minPrice) {
+                                    $query->WhereHas('auction', function ($query) use ($minPrice) {
+                                        $query->whereHas('bids', function ($query) use ($minPrice) {
+                                            $query->orderByDesc('amount')->where('amount', '>=', $minPrice)->limit(1);
+                                        });
+                                    });
+                                 });
+            return $resultQuery;
         }
     }
     public function scopeMaxPrice($query, $maxPrice)
     {
         if ($maxPrice) {
-            return $query->where('min_price', '<=', $maxPrice);
+            $resultQuery = $query->where('min_price', '<=', $maxPrice)
+                                 ->orWhere(function($query) use ($maxPrice) {
+                                    $query->whereHas('auction', function ($query) use ($maxPrice) {
+                                        $query->whereHas('bids', function ($query) use ($maxPrice) {
+                                            $query->orderByDesc('amount')->where('amount', '<=', $maxPrice)->limit(1);
+                                        });
+                                    });
+                                 });
+            return $resultQuery;
         }
     }
     public function scopeSortByTerm($query,$sortTerm) {

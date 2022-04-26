@@ -24,44 +24,44 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify' => true]);
 
-Route::get('/', [HomeController::class, 'index'])->name('welcome');
-Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('home');
-Route::get('/dashboard/products', [HomeController::class, 'products'])->name('user.products.index');
-Route::get('/dashboard/products/{slug}', [HomeController::class, 'showProduct'])->name('user.products.show');
-Route::get('/dashboard/products/{slug}/delete', [HomeController::class, 'deleteProduct'])->name('user.products.delete');
-Route::get('/dashboard/product/add', [HomeController::class, 'addProduct'])->name('user.products.create');
-Route::post('/dashboard/product/add', [HomeController::class, 'addProductSubmit'])->name('user.products.create.submit');
-Route::post('/dashboard/product/comment', [CommentController::class, 'create'])->name('user.products.comment.add');
+Route::get('/', [HomeController::class, 'index'])->middleware('auth')->name('welcome');
+Route::get('/dashboard', [HomeController::class, 'dashboard'])->middleware('auth')->name('home');
+Route::get('/dashboard/products', [HomeController::class, 'products'])->middleware('auth')->name('user.products.index');
+Route::get('/dashboard/products/{slug}', [HomeController::class, 'showProduct'])->middleware('auth')->name('user.products.show');
+Route::get('/dashboard/products/{slug}/delete', [HomeController::class, 'deleteProduct'])->middleware('auth')->name('user.products.delete');
+Route::get('/dashboard/product/add', [HomeController::class, 'addProduct'])->middleware('auth')->name('user.products.create');
+Route::post('/dashboard/product/add', [HomeController::class, 'addProductSubmit'])->middleware('auth')->name('user.products.create.submit');
+Route::post('/product/comment', [CommentController::class, 'create'])->middleware('auth')->name('user.products.comment.add');
 // all products
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::post('/products', [ProductController::class, 'index'])->name('products.search');
+Route::get('/products', [ProductController::class, 'index'])->middleware('auth')->name('products.index');
+Route::post('/products', [ProductController::class, 'index'])->middleware('auth')->name('products.search');
 // show product
-Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/products/{slug}', [ProductController::class, 'show'])->middleware('auth')->name('products.show');
 // delete product
-Route::get('/products/{slug}/delete', [ProductController::class, 'delete'])->name('products.delete');
+Route::get('/products/{slug}/delete', [ProductController::class, 'delete'])->middleware('auth')->name('products.delete');
 
 // buy product
-Route::post('/products/buy', [ProductController::class, 'placeOrder'])->name('products.buy');
+Route::post('/products/buy', [ProductController::class, 'placeOrder'])->middleware('auth')->name('products.buy');
 
 // cancel bid
-Route::post('/products/cancel', [ProductController::class, 'cancelBid'])->name('products.cancel');
+Route::post('/products/cancel', [ProductController::class, 'cancelBid'])->middleware('auth')->name('products.cancel');
 
 // admin links
 Route::group(['prefix' => 'admin','as'=>'admin.'], function() {
     Route::get('/', [AdminController::class, 'index'])->name('home');
 
     // Products
-    Route::get('/products', [AdminController::class, 'products'])->name('products.index');
-    Route::get('/categories', [AdminController::class, 'categories'])->name('categories.index');
+    Route::get('/products', [AdminController::class, 'products'])->middleware('auth')->name('products.index');
+    Route::get('/categories', [AdminController::class, 'categories'])->middleware('auth')->name('categories.index');
 });
 
-Route::get('/messages', [ChatBoxController::class, 'index'])->name('user.messages.index');
-Route::post('/messages', [ChatBoxController::class, 'create'])->name('user.products.chatbox.create');
-Route::get('/messages/{id}', [ChatBoxController::class, 'show'])->name('user.messages.show');
-Route::post('/message', [ChatController::class, 'create'])->name('user.messages.create');
+Route::get('/messages', [ChatBoxController::class, 'index'])->middleware('auth')->name('user.messages.index');
+Route::post('/messages', [ChatBoxController::class, 'create'])->middleware('auth')->name('user.products.chatbox.create');
+Route::get('/messages/{id}', [ChatBoxController::class, 'show'])->middleware('auth')->name('user.messages.show');
+Route::post('/message', [ChatController::class, 'create'])->middleware('auth')->name('user.messages.create');
 
 
 // Profile
-Route::get('/profile', [HomeController::class, 'profile'])->name('profile.index');
-Route::get('/profile/edit', [HomeController::class, 'editProfile'])->name('profile.edit');
-Route::post('/profile/edit', [HomeController::class, 'updateProfile'])->name('profile.update');
+Route::get('/profile', [HomeController::class, 'profile'])->middleware('auth')->name('profile.index');
+Route::get('/profile/edit', [HomeController::class, 'editProfile'])->middleware('auth')->name('profile.edit');
+Route::post('/profile/edit', [HomeController::class, 'updateProfile'])->middleware('auth')->name('profile.update');

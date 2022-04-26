@@ -18,13 +18,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'full_name' => 'HamroSaman Admin',
-            'email' => 'admin@hamrosaman.com',
-            'password' => Hash::make('password'),
-            'role' => 'admin'
-        ]);
-        User::factory(20)->create();
+        if(!User::where('email', 'admin@hamrosaman.com')->exists()) {
+            User::create([
+                'full_name' => 'HamroSaman Admin',
+                'email' => 'admin@hamrosaman.com',
+                'password' => Hash::make('password'),
+                'role' => 'admin'
+            ]);
+        }
         collect(['Electronics','Furniture','Others'])->each(function($category) {
             Category::create([
                 'name' => $category,
